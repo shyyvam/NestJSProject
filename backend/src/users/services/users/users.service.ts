@@ -50,7 +50,7 @@ export class UsersService {
     /**
      * @description Updates a user with the provided details in the database.
      * @param id - The unique identifier of the user to be updated.
-     * @param updateUserDetails - The details of the user to be updated.
+     * @param updateUserDetails - The details of the user to be updated
      * @returns A Promise that resolves to the number of affected rows.
      */
     updateUser(id: number, updateUserDetails: UpdateUserParams){
