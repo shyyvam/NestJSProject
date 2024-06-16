@@ -5,7 +5,9 @@ import { UsersController } from './controllers/users/users.controller';
 import { UsersService } from './services/users/users.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],  //We need to tell module which Module is imported
+  imports: [
+    TypeOrmModule.forFeature([User])
+  ],  //We need to tell module which Module is imported
   controllers: [UsersController],
   providers: [UsersService]
 })

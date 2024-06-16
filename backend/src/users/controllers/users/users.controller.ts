@@ -16,10 +16,12 @@ export class UsersController {
         return users;
     }
 
-    @Post()
-    createUser(@Body() createUserDto: CreateUserDto){
-        return this.userService.createUser(createUserDto);  //DTO to be passed here
-    }
+    
+    //Used in AuthController
+    // @Post()
+    // createUser(@Body() createUserDto: CreateUserDto){
+    //     return this.userService.createUser(createUserDto);  //DTO to be passed here
+    // }
 
     @Put(':id')
     async updateUser(

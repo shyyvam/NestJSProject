@@ -14,3 +14,8 @@ export type CreateUserProfileParams = {
     age: number;
     dob: string;
 }
+
+export type LoginUserParams = {
+    username: string;
+    password: string;
+}

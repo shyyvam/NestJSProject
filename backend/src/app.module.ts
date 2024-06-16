@@ -6,6 +6,8 @@ import { Profile } from './typeorm/entities/Profile';
 import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
 import { ProfileModule } from './profile/profile.module';
+import { AuthModule } from './auth/auth.module';
+import * as dotenv from 'dotenv';
 
 @Module({
   imports: [TypeOrmModule.forRoot({  //Database credentials
@@ -17,7 +19,8 @@ import { ProfileModule } from './profile/profile.module';
       database: 'crud',
       entities: [User, Profile],
       synchronize: true //set it false in prod
-  }), UsersModule, ProfileModule],
+  }), UsersModule, ProfileModule, AuthModule
+],
   controllers: [AppController],
   providers: [AppService],
 })
