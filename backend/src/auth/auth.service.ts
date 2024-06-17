@@ -27,7 +27,6 @@ export class AuthService {
         const user = await this.userService.findOne({username});
 
         if(!user){
-            return null;
             throw new BadRequestException('Invalid credentials for user');
         }
 
@@ -46,7 +45,8 @@ export class AuthService {
         }
 
         return {
-            message: "success"
+            message: "success",
+            Jwt: jwt
         }
     }
 

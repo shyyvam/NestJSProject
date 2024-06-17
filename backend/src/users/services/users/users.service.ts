@@ -44,7 +44,6 @@ export class UsersService {
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
-
         const newUser = this.userRepository.create({ 
             ...userWithoutPassword, 
             password: hashedPassword,
@@ -66,8 +65,14 @@ export class UsersService {
      * @param updateUserDetails - The details of the user to be updated
      * @returns A Promise that resolves to the number of affected rows.
      */
-    updateUser(id: number, updateUserDetails: UpdateUserParams){
-        return this.userRepository.update({id}, { ...updateUserDetails});
+    async updateUser(id: number, updateUserDetails: UpdateUserParams){
+        // Extract password from userDetails
+        const { password, ...userWithoutPassword } = updateUserDetails;
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        return this.userRepository.update({id}, { ...userWithoutPassword, password: hashedPassword});
     }
 
     /**

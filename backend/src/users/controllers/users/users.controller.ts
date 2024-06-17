@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Put, Param, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'backend/src/auth/guards/jwt.guard';
 import { CreateUserDto } from 'backend/src/users/dtos/CreateUser.dto';
 import { UpdateUserDto } from 'backend/src/users/dtos/UpdateUser.dto';
 import { UsersService } from 'backend/src/users/services/users/users.service';
@@ -12,8 +13,9 @@ export class UsersController {
 
 
     @Get()
-    @UseGuards(AuthGuard('local'))
+    @UseGuards(JwtAuthGuard)
     async getUsers(){
+        console.log("Inside get users function");
         const users = await this.userService.findUsers();
         return users;
     }
@@ -26,14 +28,20 @@ export class UsersController {
     // }
 
     @Put(':id')
+    @UseGuards(JwtAuthGuard)
     async updateUser(
         @Param('id',ParseIntPipe) id:number,
         @Body() updateUserDto: UpdateUserDto
         ){
         await this.userService.updateUser(id, updateUserDto);
+
+        return {
+            message: "User updated!"
+        }
     }
 
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
     async deleteUser(
         @Param('id',ParseIntPipe) id:number
         ){

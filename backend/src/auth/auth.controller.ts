@@ -6,6 +6,7 @@ import { AuthRegisterPayloadDto } from './dtos/AuthRegister.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { LocalGuard } from './guards/local.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -26,7 +27,7 @@ export class AuthController {
     }
 
     @Post('login')
-    @UseGuards(AuthGuard('local'))
+    @UseGuards(LocalGuard)
     async login(
         @Body() authLoginDto: AuthLoginPayloadDto,
         @Res({passthrough: true}) response: Response //to send cookie to frontend
