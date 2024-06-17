@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Optional } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -22,11 +22,12 @@ export class AuthService {
      * @param userDetails 
      * @returns 
      */
-    async validateUser(userDetails: AuthLoginPayloadDto, response: Response){
+    async validateUser(userDetails: AuthLoginPayloadDto, @Optional() response?: Response){
         const { username, password } = userDetails;
         const user = await this.userService.findOne({username});
 
         if(!user){
+            return null;
             throw new BadRequestException('Invalid credentials for user');
         }
 
@@ -37,7 +38,12 @@ export class AuthService {
         const jwt = await this.jwtService.signAsync({id: user.id});
 
         //httpOnly set to true so that browser can't access cookie via js
-        response.cookie('jwt',jwt, {httpOnly: true});
+        // Set HTTP-only cookie in response if provided
+        if (response) {
+            response.cookie('jwt', jwt, { httpOnly: true });
+        }else{
+            return jwt;
+        }
 
         return {
             message: "success"

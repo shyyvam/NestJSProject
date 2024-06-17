@@ -6,6 +6,7 @@ import { User } from '../typeorm/entities/User';
 import { UsersService } from '../users/services/users/users.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { AuthService } from './auth.service';
       signOptions: {expiresIn: '1d'}
     })],
   controllers: [AuthController],
-  providers: [AuthService, UsersService]
+  providers: [AuthService, UsersService, LocalStrategy]
 })
 export class AuthModule {}

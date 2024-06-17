@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, Put, Param, ParseIntPipe, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Param, ParseIntPipe, Delete, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from 'backend/src/users/dtos/CreateUser.dto';
 import { UpdateUserDto } from 'backend/src/users/dtos/UpdateUser.dto';
 import { UsersService } from 'backend/src/users/services/users/users.service';
@@ -11,6 +12,7 @@ export class UsersController {
 
 
     @Get()
+    @UseGuards(AuthGuard('local'))
     async getUsers(){
         const users = await this.userService.findUsers();
         return users;

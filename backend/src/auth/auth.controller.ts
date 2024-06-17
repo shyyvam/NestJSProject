@@ -1,10 +1,11 @@
-import { Body, Controller, Post, Logger, Res, Get, Req, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post, Logger, Res, Get, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { UsersService } from '../users/services/users/users.service';
 import { AuthService } from './auth.service';
 import { AuthLoginPayloadDto } from './dtos/AuthLogin.dto';
 import { AuthRegisterPayloadDto } from './dtos/AuthRegister.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -25,6 +26,7 @@ export class AuthController {
     }
 
     @Post('login')
+    @UseGuards(AuthGuard('local'))
     async login(
         @Body() authLoginDto: AuthLoginPayloadDto,
         @Res({passthrough: true}) response: Response //to send cookie to frontend
