@@ -7,6 +7,7 @@ import { User } from './typeorm/entities/User';
 import { UsersModule } from './users/users.module';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
 import * as dotenv from 'dotenv';
 
 @Module({
@@ -19,7 +20,7 @@ import * as dotenv from 'dotenv';
       database: 'crud',
       entities: [User, Profile],
       synchronize: true //set it false in prod
-  }), UsersModule, ProfileModule, AuthModule
+  }), UsersModule, ProfileModule, AuthModule, ProductsModule
 ],
   controllers: [AppController],
   providers: [AppService],
